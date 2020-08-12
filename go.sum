@@ -1,0 +1,6 @@
+github.com/goji/goji v1.1.0 h1:T3ezVol+mr541r6jnhrH4gN+iJ6gxVj1CmjVKoZXILw=
+github.com/goji/goji v2.0.2+incompatible h1:Tj92SLCG2tsrUk77FMQ8NNERvTdsgUeX+iE4J5Xw+Jw=
+github.com/goji/goji v2.0.2+incompatible/go.mod h1:z5nhnH5eywWZQcFjJ+Ok6dS1qDOWOJaQAoCBnK+eJhQ=
+goji.io v1.1.0 h1:7QNQWwPiGPyOlpH9UDNh+F9BdGMLXr60lfvPSnigA8o=
+goji.io v2.0.2+incompatible h1:uIssv/elbKRLznFUy3Xj4+2Mz/qKhek/9aZQDUMae7c=
+goji.io v2.0.2+incompatible/go.mod h1:sbqFwrtqZACxLBTQcdgVjFh54yGVCvwq8+w49MVMMIk=
