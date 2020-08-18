@@ -11,5 +11,6 @@ import (
 func main() {
 	mux := goji.NewMux()
 	mux.HandleFunc(pat.Get("/health"), handlers.HealthHandler)
-	log.Fatal(http.ListenAndServe("localhost:8000", mux))
+	mux.HandleFunc(pat.Get("/template"), handlers.TemplatingHandler)
+	log.Fatal(http.ListenAndServe(":8000", mux))
 }
