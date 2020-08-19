@@ -3,6 +3,7 @@ package fileio
 import (
 	"errors"
 	"io/ioutil"
+	"log"
 	"os/exec"
 )
 
@@ -12,6 +13,7 @@ func ConvertHTMLtoPDF(htmlFilePath string, pdfFilePath string) error {
 	cmd := exec.Command("wkhtmltopdf", args...)
 	err := cmd.Run()
 	if err != nil {
+		log.Print(err)
 		return err
 	}
 	return nil

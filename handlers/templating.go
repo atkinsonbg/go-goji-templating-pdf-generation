@@ -28,9 +28,10 @@ func TemplatingHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer os.RemoveAll(dir)
 
-	err = fileio.GenerateHTMLFromData(m["data"], htmlPath)
+	templateName := m["template"].(string)
+	err = fileio.GenerateHTMLFromData(m["data"], dir, templateName, htmlPath)
 	if err != nil {
-		log.Print(err.Error())
+		log.Print(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}

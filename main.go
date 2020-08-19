@@ -10,6 +10,8 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.Llongfile)
+
 	mux := goji.NewMux()
 	mux.HandleFunc(pat.Get("/health"), handlers.HealthHandler)
 	mux.HandleFunc(pat.Post("/template"), handlers.TemplatingHandler)
