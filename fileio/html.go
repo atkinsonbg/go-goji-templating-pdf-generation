@@ -21,10 +21,6 @@ func DecodeRequestBody(rbody io.ReadCloser) (map[string]interface{}, error) {
 
 // GenerateHTMLFromData takes a map of data and performs the HTML templating
 func GenerateHTMLFromData(data interface{}, htmlPath string) error {
-	err := os.Mkdir("temp", 0755)
-	if err != nil {
-		return err
-	}
 
 	t, err := template.New("foo").Option("missingkey=error").Parse(`Hello {{.world}}!`)
 	if err != nil {
