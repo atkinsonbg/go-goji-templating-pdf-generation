@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -11,27 +10,23 @@ import (
 	"github.com/atkinsonbg/go-goji-templating-pdf-generation/fileio"
 )
 
+// TemplatingHandler is responsible for taking input from the HTTP call, executing the template, and returning a PDF
 func TemplatingHandler(w http.ResponseWriter, r *http.Request) {
-	htmlPath := "temp/test.html"
-	pdfPath := "temp/test.pdf"
+	htmlPath := "temp/test2.html"
+	pdfPath := "temp/test2.pdf"
 
 	t, err := template.New("foo").Option("missingkey=error").Parse(`Hello {{.world}}!`)
 	if err != nil {
-		fmt.Println(err)
+		log.Print(err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
-	// Creating the JSON string and marshaling it to a map
-
-	jsondata := `{ "world": "Earth" }`
-	m := map[string]interface{}{}
-	err = json.Unmarshal([]byte(jsondata), &m)
+	m, err := fileio.DecodeRequestBody(r.Body)
 	if err != nil {
-		fmt.Println(err)
-	}
-
-	err = t.Execute(os.Stdout, m)
-	if err != nil {
-		fmt.Println(err)
+		log.Print(err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	err = os.Mkdir("temp", 0755)
@@ -41,13 +36,15 @@ func TemplatingHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err2.Error())
 	}
 	defer file.Close()
-	_, err = file.WriteString("<html><body>Hello WORLD!! sdfsdfdsfsdfsdf<br />fsdfsd</body></html>")
+
+	err = t.Execute(file, m["data"])
 	if err != nil {
-		fmt.Println(err2.Error())
+		fmt.Println(err)
 	}
+
 	err = file.Sync()
 	if err != nil {
-		fmt.Println(err2.Error())
+		fmt.Println(err.Error())
 	}
 
 	err = fileio.ConvertHTMLtoPDF(htmlPath, pdfPath)
