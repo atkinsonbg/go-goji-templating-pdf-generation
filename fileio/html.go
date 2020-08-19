@@ -1,9 +1,11 @@
 package fileio
 
 import (
-	"io"
 	"encoding/json"
+	"html/template"
+	"io"
 	"log"
+	"os"
 )
 
 // DecodeRequestBody takes the http.Request body and decodes it to a map
@@ -15,4 +17,35 @@ func DecodeRequestBody(rbody io.ReadCloser) (map[string]interface{}, error) {
 		return nil, err
 	}
 	return m, nil
+}
+
+// GenerateHTMLFromData takes a map of data and performs the HTML templating
+func GenerateHTMLFromData(data interface{}, htmlPath string) error {
+	err := os.Mkdir("temp", 0755)
+	if err != nil {
+		return err
+	}
+
+	t, err := template.New("foo").Option("missingkey=error").Parse(`Hello {{.world}}!`)
+	if err != nil {
+		return err
+	}
+
+	file, err := os.Create(htmlPath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	err = t.Execute(file, data)
+	if err != nil {
+		return err
+	}
+
+	err = file.Sync()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

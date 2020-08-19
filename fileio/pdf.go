@@ -1,8 +1,8 @@
 package fileio
 
 import (
+	"errors"
 	"io/ioutil"
-	"log"
 	"os/exec"
 )
 
@@ -12,7 +12,6 @@ func ConvertHTMLtoPDF(htmlFilePath string, pdfFilePath string) error {
 	cmd := exec.Command("wkhtmltopdf", args...)
 	err := cmd.Run()
 	if err != nil {
-		log.Print(err.Error())
 		return err
 	}
 	return nil
@@ -22,8 +21,11 @@ func ConvertHTMLtoPDF(htmlFilePath string, pdfFilePath string) error {
 func GetPdfBytes(pdfPath string) ([]byte, error) {
 	content, err := ioutil.ReadFile(pdfPath)
 	if err != nil {
-		log.Print(err)
 		return nil, err
+	}
+
+	if len(content) == 0 {
+		return nil, errors.New("content is zero")
 	}
 
 	return content, nil

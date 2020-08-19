@@ -1,5 +1,5 @@
-test:
-	go test -v ./...
+tests:
+	go test -v ./... -coverpkg ./... -coverprofile cover.out
 
 run:
 	go run github.com/atkinsonbg/go-goji-templating-pdf-generation
