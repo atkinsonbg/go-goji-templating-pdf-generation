@@ -7,11 +7,11 @@ import (
 func TestConvertHTMLtoPDFFail(t *testing.T) {
 	err := ConvertHTMLtoPDF("test/test.html", "test/test.pdf")
 	if err != nil {
-		t.Log("PASS: Did not convert HTML.")
+		t.Error("FAIL: Did not convert HTML.")
 		return
 	}
 
-	t.Error("FAIL: Ran somehow.")
+	t.Log("PASS: was able to convert the HTML to PDF.")
 	return
 }
 
