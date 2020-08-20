@@ -36,3 +36,32 @@ func TestDecodeRequestBodyPass(t *testing.T) {
 
 	return
 }
+
+func TestGenerateHTMLFromDataPass(t *testing.T) {
+	m := map[string]interface{}{}
+	m["name"] = "Brandon"
+
+	tempdir, htmlPath, _, _ := GetTempDirAndPaths("unittest")
+
+	err := GenerateHTMLFromData(m, tempdir, "template1", htmlPath)
+	if err != nil {
+		t.Error("FAIL: generating HTML was not successful")
+	}
+
+	t.Log("PASS: was able to generate HTML")
+}
+
+func TestGenerateHTMLFromDataFail(t *testing.T) {
+	m := map[string]interface{}{}
+	m["doesnotexist"] = "Brandon"
+
+	tempdir, htmlPath, _, _ := GetTempDirAndPaths("unittest")
+
+	err := GenerateHTMLFromData(m, tempdir, "template1", htmlPath)
+	if err != nil {
+		t.Log("PASS: missingkey option caught error")
+		return
+	}
+
+	t.Error("FAIL: generating HTML should not have been successful, missingkey error")
+}

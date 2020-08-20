@@ -32,7 +32,7 @@ func GenerateHTMLFromData(data interface{}, tempDir string, templateName string,
 	// expecting template to be named "index.html"
 	htmlTemplate := path.Join(tempDir, "index.html")
 
-	t := template.New("index.html")
+	t := template.New("index.html").Option("missingkey=error")
 	t, err = t.ParseFiles(htmlTemplate)
 	if err != nil {
 		log.Print(err)

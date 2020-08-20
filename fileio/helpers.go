@@ -24,7 +24,7 @@ func GetTempDirAndPaths(filename string) (string, string, string, error) {
 
 // CopyAllAssetsToTempDir stages HTML, CSS, and images to the temp directory for templating
 func CopyAllAssetsToTempDir(tempDir string, template string) error {
-	srcDir := filepath.Join("../test", template)
+	srcDir := filepath.Join("../templates", template)
 
 	srcFiles, err := ioutil.ReadDir(srcDir)
 	if err != nil {

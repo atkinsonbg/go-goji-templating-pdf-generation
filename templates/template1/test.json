@@ -1,0 +1,8 @@
+{
+    "filename": "starfleet",
+    "template": "template1",
+    "optimize": true,
+    "data": {
+        "name": "Brandon!"
+    }
+}
