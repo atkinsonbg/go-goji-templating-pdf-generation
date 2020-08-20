@@ -5,7 +5,7 @@ import (
 )
 
 func TestConvertHTMLtoPDFFail(t *testing.T) {
-	err := ConvertHTMLtoPDF("test/test.html", "test/test.pdf")
+	err := ConvertHTMLtoPDF("templates/test.html", "templates/test.pdf")
 	if err != nil {
 		t.Error("FAIL: Did not convert HTML.")
 		return
@@ -27,7 +27,7 @@ func TestGetPDFBytesFail(t *testing.T) {
 }
 
 func TestGetPDFBytes(t *testing.T) {
-	content, err := GetPdfBytes("../test/test.pdf")
+	content, err := GetPdfBytes("../templates/test.pdf")
 	if err != nil {
 		t.Error("Fail: Did not get PDF bytes.")
 		return
