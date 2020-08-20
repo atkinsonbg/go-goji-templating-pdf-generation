@@ -1,0 +1,6 @@
+FROM golang:latest as BUILD
+RUN apt-get update && \
+    apt-get install -y xvfb wkhtmltopdf ghostscript
+WORKDIR testdir
+COPY . .
+ENTRYPOINT ["go", "test", "-v", "./..."]
