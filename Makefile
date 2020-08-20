@@ -14,4 +14,4 @@ dockerrun:
 	docker run -p 8000:8000 github.com/atkinsonbg/go-goji-templating-pdf-generation/api:latest
 
 dockerruntest:
-	docker run github.com/atkinsonbg/go-goji-templating-pdf-generation/api/tests:latest
+	docker run -v ${PWD}:/go/testdir github.com/atkinsonbg/go-goji-templating-pdf-generation/api/tests:latest
