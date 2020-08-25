@@ -7,5 +7,5 @@ FROM alpine:3.12.0
 RUN apk update && \
     apk add xvfb ttf-freefont fontconfig wkhtmltopdf ghostscript
 COPY --from=BUILD ./go/builddir/go-goji-templating-pdf-generation-api .
-COPY test test
+COPY templates templates
 ENTRYPOINT ["./go-goji-templating-pdf-generation-api"]
