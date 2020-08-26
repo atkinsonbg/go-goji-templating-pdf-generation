@@ -5,7 +5,7 @@ vet:
 	go vet -json ./...
 
 benchmark:
-	go test -v ./... -bench . -benchtime 10s
+	go test -v ./... -bench=. -benchtime=20s -run=^$
 
 run:
 	go run github.com/atkinsonbg/go-goji-templating-pdf-generation

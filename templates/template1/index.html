@@ -5,14 +5,41 @@
 </head>
 
 <body>
-    <div>
-        <img src="starfleet-logo.png" />
+    <div tabindex="1">
+        <img src="starfleet-logo.png" alt="Starfleet Logo" />
     </div>
-    <div class="header">
-        Hello, {{.name}}, from Starfleet!
+    <div class="header" tabindex="2">
+        <span>To: {{.firstname}} {{.lastname}}</span>
+        <span>Address 1</span>
+        <span>Address 2</span>
+        <span>Address 3</span>
     </div>
-    <div class="body">
-        Some more text.
+    <div class="body" tabindex="3">
+        <span>Dear {{.firstname}}</span>
+        <span>
+            We are pleased to inform you that your application to Starfleet Academy has been accepted. Your next steps
+            will be to take the Entrance Competition Exams, attend the Summer Prepatory Summer Program, and finally
+            take your Entrance Exam.
+        </span>
+        <span>
+            The Entrance Competition Exams will begin on {{.examdate}}. We await your reply no later than {{.replydate}}
+            to reserve your spot.
+        </span>
+        <span>
+            Sincerely,
+        </span>
+        <div>
+            <img src="signature.png" alt="Rear Admiral Brand signature" />
+        </div>
+        <span>
+            Rear Admiral Brand
+        </span>
+        <span>
+            Superintendent
+        </span>
+        <span>
+            Live long and prosper.
+        </span>
     </div>
 </body>
 

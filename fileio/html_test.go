@@ -39,13 +39,17 @@ func TestDecodeRequestBodyPass(t *testing.T) {
 
 func TestGenerateHTMLFromDataPass(t *testing.T) {
 	m := map[string]interface{}{}
-	m["name"] = "Brandon"
+	m["firstname"] = "Brandon"
+	m["lastname"] = "Atkinson"
+	m["examdate"] = "2/3/4"
+	m["replydate"] = "1/2/3"
 
 	tempdir, htmlPath, _, _ := GetTempDirAndPaths("unittest")
 
 	err := GenerateHTMLFromData(m, tempdir, "template1", htmlPath)
 	if err != nil {
 		t.Error("FAIL: generating HTML was not successful")
+		return
 	}
 
 	t.Log("PASS: was able to generate HTML")

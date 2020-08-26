@@ -3,6 +3,9 @@
     "template": "template1",
     "optimize": true,
     "data": {
-        "name": "Brandon!"
+        "firstname": "Brandon",
+        "lastname": "Atkinson",
+        "examdate": "12/20/3045",
+        "replydate": "11/10/3045"
     }
 }

@@ -2,6 +2,7 @@ package fileio
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os/exec"
@@ -11,6 +12,24 @@ import (
 func ConvertHTMLtoPDF(htmlFilePath string, pdfFilePath string) error {
 	args := []string{htmlFilePath, pdfFilePath}
 	cmd := exec.Command("wkhtmltopdf", args...)
+	err := cmd.Run()
+	if err != nil {
+		log.Print(err)
+		return err
+	}
+	return nil
+}
+
+// AddPDFMetadata adds metadata to the PDF file, this is for accessibility
+func AddPDFMetadata(title string, author string, keywords string, subject string, pdfPath string) error {
+	argTitle := fmt.Sprintf(`-Title="%s"`, title)
+	argAuthor := fmt.Sprintf(`-PDF:Author="%s"`, author)
+	argKeywords := fmt.Sprintf(`-PDF:Keywords="%s"`, keywords)
+	argSubject := fmt.Sprintf(`-PDF:Subject="%s"`, subject)
+	argOverwrite := "-overwrite_original_in_place"
+	argPath := pdfPath
+	args := []string{argTitle, argAuthor, argKeywords, argSubject, argOverwrite, argPath}
+	cmd := exec.Command("exiftool", args...)
 	err := cmd.Run()
 	if err != nil {
 		log.Print(err)
