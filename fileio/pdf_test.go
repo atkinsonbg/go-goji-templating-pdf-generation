@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestConvertHTMLtoPDFFail(t *testing.T) {
+func TestConvertHTMLtoPDF(t *testing.T) {
 	err := ConvertHTMLtoPDF("templates/test.html", "templates/test.pdf")
 	if err != nil {
 		t.Error("FAIL: Did not convert HTML.")
@@ -13,6 +13,14 @@ func TestConvertHTMLtoPDFFail(t *testing.T) {
 
 	t.Log("PASS: was able to convert the HTML to PDF.")
 	return
+}
+
+func BenchmarkConvertHTMLtoPDF(b *testing.B) {
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		_ = ConvertHTMLtoPDF("templates/test.html", "templates/test.pdf")
+	}
+	
 }
 
 func TestGetPDFBytesFail(t *testing.T) {

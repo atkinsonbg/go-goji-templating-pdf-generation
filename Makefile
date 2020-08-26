@@ -1,6 +1,12 @@
 tests:
 	go test -v ./... -coverpkg ./... -coverprofile cover.out
 
+vet:
+	go vet -json ./...
+
+benchmark:
+	go test -v ./... -bench . -benchtime 10s
+
 run:
 	go run github.com/atkinsonbg/go-goji-templating-pdf-generation
 
