@@ -15,14 +15,6 @@ func TestConvertHTMLtoPDF(t *testing.T) {
 	return
 }
 
-func BenchmarkConvertHTMLtoPDF(b *testing.B) {
-	b.StartTimer()
-	for i := 0; i < b.N; i++ {
-		_ = ConvertHTMLtoPDF("templates/test.html", "templates/test.pdf")
-	}
-	
-}
-
 func TestGetPDFBytesFail(t *testing.T) {
 	_, err := GetPdfBytes("foo.pdf")
 	if err != nil {
@@ -45,4 +37,28 @@ func TestGetPDFBytes(t *testing.T) {
 		t.Log("PASS: Succsefully got PDF bytes.")
 	}
 	return
+}
+
+func TestAddPDFMetadata(t *testing.T) {
+	err := AddPDFMetadata("title", "author", "keywords, more", "subject", "../templates/test.pdf")
+	if err != nil {
+		t.Error("Fail: Did not add PDF metadata.")
+		return
+	}
+	t.Log("PASS: Succsefully added PDF metadata.")
+	return
+}
+
+func BenchmarkConvertHTMLtoPDF(b *testing.B) {
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		_ = ConvertHTMLtoPDF("templates/test.html", "templates/test.pdf")
+	}
+}
+
+func BenchmarkAddPDFMetadata(b *testing.B) {
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		_ = AddPDFMetadata("title", "author", "keywords, more", "subject", "../templates/test.pdf")
+	}
 }
