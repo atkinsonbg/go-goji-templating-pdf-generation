@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os/exec"
+	"strings"
 )
 
 // ConvertHTMLtoPDF converts the supplied HTML file to a PDF file
@@ -29,6 +30,7 @@ func AddPDFMetadata(title string, author string, keywords string, subject string
 	argOverwrite := "-overwrite_original_in_place"
 	argPath := pdfPath
 	args := []string{argTitle, argAuthor, argKeywords, argSubject, argOverwrite, argPath}
+
 	cmd := exec.Command("exiftool", args...)
 	err := cmd.Run()
 	if err != nil {
@@ -36,6 +38,26 @@ func AddPDFMetadata(title string, author string, keywords string, subject string
 		return err
 	}
 	return nil
+}
+
+// OptimizePDF optimizes the PDF, reusing images, and reducing the overall size
+func OptimizePDF(pdfPath string) (string, error) {
+	optPdfPath := strings.ReplaceAll(pdfPath, ".pdf", "-opt.pdf")
+	argNoPause := "-dNOPAUSE"
+	argBatch := "-dBATCH"
+	argDevice := "-sDEVICE=pdfwrite"
+	argPdfSettings := "-dPDFSETTINGS=/printer"
+	argDuplicateImages := "-dDetectDuplicateImages=true"
+	argOutput := fmt.Sprintf(`-sOutputFile="%s"`, optPdfPath)
+	args := []string{argNoPause, argBatch, argDevice, argPdfSettings, argDuplicateImages, argOutput, pdfPath}
+
+	cmd := exec.Command("gs", args...)
+	err := cmd.Run()
+	if err != nil {
+		log.Print(err)
+		return "ERROR", err
+	}
+	return optPdfPath, nil
 }
 
 // GetPdfBytes returns a []byte of the requested file to return in the http.ResponseWriter
