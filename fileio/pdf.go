@@ -11,11 +11,12 @@ import (
 
 // ConvertHTMLtoPDF converts the supplied HTML file to a PDF file
 func ConvertHTMLtoPDF(htmlFilePath string, pdfFilePath string) error {
-	args := []string{htmlFilePath, pdfFilePath}
+	args := []string{"--enable-local-file-access", "--outline", htmlFilePath, pdfFilePath}
 	cmd := exec.Command("wkhtmltopdf", args...)
 	err := cmd.Run()
 	if err != nil {
 		log.Print(err)
+		log.Print(err.Error())
 		return err
 	}
 	return nil
@@ -24,12 +25,13 @@ func ConvertHTMLtoPDF(htmlFilePath string, pdfFilePath string) error {
 // AddPDFMetadata adds metadata to the PDF file, this is for accessibility
 func AddPDFMetadata(title string, author string, keywords string, subject string, pdfPath string) error {
 	argTitle := fmt.Sprintf(`-Title="%s"`, title)
-	argAuthor := fmt.Sprintf(`-PDF:Author="%s"`, author)
-	argKeywords := fmt.Sprintf(`-PDF:Keywords="%s"`, keywords)
-	argSubject := fmt.Sprintf(`-PDF:Subject="%s"`, subject)
+	argAuthor := fmt.Sprintf(`-Author="%s"`, author)
+	argKeywords := fmt.Sprintf(`-Keywords="%s"`, keywords)
+	argSubject := fmt.Sprintf(`-Subject="%s"`, subject)
 	argOverwrite := "-overwrite_original_in_place"
+	argLang := fmt.Sprintf(`-Lang %s`, "en")
 	argPath := pdfPath
-	args := []string{argTitle, argAuthor, argKeywords, argSubject, argOverwrite, argPath}
+	args := []string{argTitle, argAuthor, argKeywords, argSubject, argOverwrite, argLang, argPath}
 
 	cmd := exec.Command("exiftool", args...)
 	err := cmd.Run()
