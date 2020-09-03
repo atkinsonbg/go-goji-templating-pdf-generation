@@ -10,8 +10,7 @@ RUN apk update && \
     ttf-freefont \
     fontconfig \
     wkhtmltopdf-0.12.6-r0.apk \
-    ghostscript \
-    exiftool
+    ghostscript
 COPY --from=BUILD ./go/builddir/go-goji-templating-pdf-generation-api .
 COPY templates templates
 ENTRYPOINT ["./go-goji-templating-pdf-generation-api"]

@@ -50,13 +50,6 @@ func TemplatingHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = fileio.AddPDFMetadata("This is the title", "Brandon A", "keyword 1, keyword 2", "Subject 1", pdfPath)
-	if err != nil {
-		log.Print(err.Error())
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
 	pdfContent, err := fileio.GetPdfBytes(pdfPath)
 	if err != nil {
 		log.Print(err.Error())
