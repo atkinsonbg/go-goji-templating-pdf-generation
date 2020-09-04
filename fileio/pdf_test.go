@@ -39,13 +39,13 @@ func TestGetPDFBytes(t *testing.T) {
 	return
 }
 
-func TestAddPDFMetadata(t *testing.T) {
-	err := AddPDFMetadata("title", "author", "keywords, more", "subject", "../templates/test.pdf")
+func TestOptimizePDF(t *testing.T) {
+	_, err := OptimizePDF("../templates/test.pdf")
 	if err != nil {
-		t.Error("Fail: Did not add PDF metadata.")
+		t.Error("Fail: Did not optimize PDF.")
 		return
 	}
-	t.Log("PASS: Succsefully added PDF metadata.")
+	t.Log("PASS: Succsefully optimized PDF.")
 	return
 }
 
@@ -56,9 +56,9 @@ func BenchmarkConvertHTMLtoPDF(b *testing.B) {
 	}
 }
 
-func BenchmarkAddPDFMetadata(b *testing.B) {
+func BenchmarkOptimizePDF(b *testing.B) {
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		_ = AddPDFMetadata("title", "author", "keywords, more", "subject", "../templates/test.pdf")
+		_, _ = OptimizePDF("../templates/test.pdf")
 	}
 }

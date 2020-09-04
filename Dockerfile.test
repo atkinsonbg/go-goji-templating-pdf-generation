@@ -1,6 +1,6 @@
 FROM golang:latest as BUILD
 RUN apt-get update && \
-    apt-get install -y xvfb wkhtmltopdf ghostscript exiftool
+    apt-get install -y xvfb wkhtmltopdf ghostscript
 WORKDIR testdir
 COPY . .
 ENTRYPOINT ["go", "test", "-v", "./...", "-bench", ".", "-benchtime", "20s", "-coverprofile", "cover.out"]
