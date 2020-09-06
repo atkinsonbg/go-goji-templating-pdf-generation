@@ -32,13 +32,13 @@ func OptimizePDF(pdfPath string) (string, error) {
 	argDuplicateImages := "-dDetectDuplicateImages=true"
 	argOutput := fmt.Sprintf(`-sOutputFile="%s"`, optPdfPath)
 	argMarks1 := "-c"
-	argMarks2 := `"[ /Title (Jaziels Important Document) 
+	argMarks2 := `[ /Title (Jaziels Important Document) 
 						/Author (Jaziel Aguirre)
-						/DOCINFO pdfmark"
+						/DOCINFO pdfmark
 						
-						[ /Title (Contents)
-  						/Page 1
-  						/OUT pdfmark`
+						[ /Title (Contents) /Page 1 /OUT pdfmark
+						
+						[ /Subtype /Catalog /Lang (en-US) /StPNE pdfmark`
 	args := []string{argNoPause, argBatch, argDevice, argPdfSettings, argDuplicateImages, argOutput, pdfPath, argMarks1, argMarks2}
 
 	cmd := exec.Command("gs", args...)

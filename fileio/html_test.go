@@ -69,3 +69,18 @@ func TestGenerateHTMLFromDataFail(t *testing.T) {
 
 	t.Error("FAIL: generating HTML should not have been successful, missingkey error")
 }
+
+func BenchmarkGenerateHTMLFromData(b *testing.B) {
+	m := map[string]interface{}{}
+	m["firstname"] = "Brandon"
+	m["lastname"] = "Atkinson"
+	m["examdate"] = "2/3/4"
+	m["replydate"] = "1/2/3"
+
+	tempdir, htmlPath, _, _ := GetTempDirAndPaths("unittest")
+
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		_ = GenerateHTMLFromData(m, tempdir, "template1", htmlPath)
+	}
+}

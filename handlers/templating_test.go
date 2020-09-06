@@ -129,3 +129,31 @@ func TestTemplateHandlerWrongTemplate(t *testing.T) {
 			rr.Code, http.StatusInternalServerError)
 	}
 }
+
+func BenchmarkGenerateHTMLFromData(b *testing.B) {
+
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		var data = []byte(`
+							{
+								"filename": "starfleetnew",
+								"template": "template1",
+								"optimize": true,
+								"data": {
+									"firstname": "Brandon",
+									"lastname": "Atkinson",
+									"examdate": "12/20/3045",
+									"replydate": "11/10/3045"
+								}
+							}`)
+
+		buff := bytes.NewBuffer(data)
+
+		req, _ := http.NewRequest("POST", "/template", buff)
+		req.Header.Add("Content-Type", "application/json")
+		rr := httptest.NewRecorder()
+		handler := http.HandlerFunc(TemplatingHandler)
+
+		handler.ServeHTTP(rr, req)
+	}
+}
