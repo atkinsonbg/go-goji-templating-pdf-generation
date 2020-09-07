@@ -10,8 +10,8 @@ import (
 )
 
 // ConvertHTMLtoPDF converts the supplied HTML file to a PDF file
-func ConvertHTMLtoPDF(htmlFilePath string, pdfFilePath string) error {
-	args := []string{"--enable-local-file-access", htmlFilePath, pdfFilePath}
+func ConvertHTMLtoPDF(htmlFilePath string, pdfFilePath string, pageSize string) error {
+	args := []string{"--enable-local-file-access", "--page-size", pageSize, htmlFilePath, pdfFilePath}
 	cmd := exec.Command("wkhtmltopdf", args...)
 	err := cmd.Run()
 	if err != nil {

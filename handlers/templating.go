@@ -36,7 +36,7 @@ func TemplatingHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = fileio.ConvertHTMLtoPDF(htmlPath, pdfPath)
+	err = fileio.ConvertHTMLtoPDF(htmlPath, pdfPath, m["pagesize"].(string))
 	if err != nil {
 		log.Printf(`Error in TemplatingHandler, ERROR: %s :: %s`, err, err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
