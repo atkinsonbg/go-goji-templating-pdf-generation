@@ -1,5 +1,5 @@
-# go-goji-templating-pdf-generation
-
+# Go Goji Templating/PDF Generation
+This repo is used to experiment with Go's templating engine and use it to generate PDFs. One of the goals is to get a fully accessible PDF, in the least amount of time and memory/CPU footprint. The tools used are Go's text/template package, WKHTMLTOPDF, and Ghostscript.
 
 ## Resources
 * https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2000
