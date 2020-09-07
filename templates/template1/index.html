@@ -8,13 +8,13 @@
     <div id="header-logo-div" tabindex="1">
         <img src="starfleet-logo.png" alt="Starfleet Logo" title="Starfleet Logo" />
     </div>
-    <div class="header" tabindex="2">
+    <div id="header-address" tabindex="2">
         <span>To: {{.firstname}} {{.lastname}}</span>
-        <span>Address 1</span>
-        <span>Address 2</span>
-        <span>Address 3</span>
+        <span>{{.address1}}</span>
+        <span>{{.address2}}</span>
+        <span>{{.address3}}</span>
     </div>
-    <div class="body" tabindex="3">
+    <div id="letter-body" tabindex="3">
         <span>Dear {{.firstname}}</span>
         <span>
             We are pleased to inform you that your application to Starfleet Academy has been accepted. Your next steps
@@ -25,6 +25,8 @@
             The Entrance Competition Exams will begin on {{.examdate}}. We await your reply no later than {{.replydate}}
             to reserve your spot.
         </span>
+    </div>
+    <div id="letter-close">
         <span>
             Sincerely,
         </span>
