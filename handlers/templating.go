@@ -14,7 +14,7 @@ func TemplatingHandler(w http.ResponseWriter, r *http.Request) {
 
 	m, err := fileio.DecodeRequestBody(r.Body)
 	if err != nil {
-		log.Print(err.Error())
+		log.Printf(`Error in TemplatingHandler, ERROR: %s :: %s`, err, err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -22,7 +22,7 @@ func TemplatingHandler(w http.ResponseWriter, r *http.Request) {
 	filename := m["filename"].(string)
 	dir, htmlPath, pdfPath, err := fileio.GetTempDirAndPaths(filename)
 	if err != nil {
-		log.Print(err.Error())
+		log.Printf(`Error in TemplatingHandler, ERROR: %s :: %s`, err, err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -31,28 +31,28 @@ func TemplatingHandler(w http.ResponseWriter, r *http.Request) {
 	templateName := m["template"].(string)
 	err = fileio.GenerateHTMLFromData(m["data"], dir, templateName, htmlPath)
 	if err != nil {
-		log.Print(err)
+		log.Printf(`Error in TemplatingHandler, ERROR: %s :: %s`, err, err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	err = fileio.ConvertHTMLtoPDF(htmlPath, pdfPath)
 	if err != nil {
-		log.Print(err.Error())
+		log.Printf(`Error in TemplatingHandler, ERROR: %s :: %s`, err, err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	pdfPath, err = fileio.OptimizePDF(pdfPath)
+	pdfPath, err = fileio.OptimizePDF(pdfPath, m["metadata"])
 	if err != nil {
-		log.Print(err.Error())
+		log.Printf(`Error in TemplatingHandler, ERROR: %s :: %s`, err, err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	pdfContent, err := fileio.GetPdfBytes(pdfPath)
 	if err != nil {
-		log.Print(err.Error())
+		log.Printf(`Error in TemplatingHandler, ERROR: %s :: %s`, err, err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}

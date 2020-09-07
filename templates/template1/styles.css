@@ -6,3 +6,7 @@
 .body {
     font-family: monospace;
 }
+
+#header-logo-div {
+    text-align: center;
+}

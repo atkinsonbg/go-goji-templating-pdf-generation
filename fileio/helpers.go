@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -13,6 +14,7 @@ import (
 func GetTempDirAndPaths(filename string) (string, string, string, error) {
 	dir, err := ioutil.TempDir("", "temp")
 	if err != nil {
+		log.Printf(`Error in GetTempDirAndPaths, ERROR: %s :: %s`, err, err.Error())
 		return "", "", "", err
 	}
 
@@ -28,6 +30,7 @@ func CopyAllAssetsToTempDir(tempDir string, template string) error {
 
 	srcFiles, err := ioutil.ReadDir(srcDir)
 	if err != nil {
+		log.Printf(`Error in CopyAllAssetsToTempDir, ERROR: %s :: %s`, err, err.Error())
 		return err
 	}
 
@@ -37,18 +40,21 @@ func CopyAllAssetsToTempDir(tempDir string, template string) error {
 
 		in, err := os.Open(srcFile)
 		if err != nil {
+			log.Printf(`Error in CopyAllAssetsToTempDir, ERROR: %s :: %s`, err, err.Error())
 			return err
 		}
 		defer in.Close()
 
 		out, err := os.Create(dstFile)
 		if err != nil {
+			log.Printf(`Error in CopyAllAssetsToTempDir, ERROR: %s :: %s`, err, err.Error())
 			return err
 		}
 		defer out.Close()
 
 		_, err = io.Copy(out, in)
 		if err != nil {
+			log.Printf(`Error in CopyAllAssetsToTempDir, ERROR: %s :: %s`, err, err.Error())
 			return err
 		}
 	}

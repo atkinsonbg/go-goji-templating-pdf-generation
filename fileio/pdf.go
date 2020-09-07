@@ -11,19 +11,20 @@ import (
 
 // ConvertHTMLtoPDF converts the supplied HTML file to a PDF file
 func ConvertHTMLtoPDF(htmlFilePath string, pdfFilePath string) error {
-	args := []string{"--enable-local-file-access", "--outline", htmlFilePath, pdfFilePath}
+	args := []string{"--enable-local-file-access", htmlFilePath, pdfFilePath}
 	cmd := exec.Command("wkhtmltopdf", args...)
 	err := cmd.Run()
 	if err != nil {
-		log.Print(err)
-		log.Print(err.Error())
+		log.Printf(`Error in ConvertHTMLtoPDF, ERROR: %s :: %s`, err, err.Error())
 		return err
 	}
 	return nil
 }
 
 // OptimizePDF optimizes the PDF, reusing images, and reducing the overall size and applies metadata & bookmarks
-func OptimizePDF(pdfPath string) (string, error) {
+func OptimizePDF(pdfPath string, metadata interface{}) (string, error) {
+	m := metadata.(map[string]interface{})
+
 	optPdfPath := strings.ReplaceAll(pdfPath, ".pdf", "-opt.pdf")
 	argNoPause := "-dNOPAUSE"
 	argBatch := "-dBATCH"
@@ -32,19 +33,21 @@ func OptimizePDF(pdfPath string) (string, error) {
 	argDuplicateImages := "-dDetectDuplicateImages=true"
 	argOutput := fmt.Sprintf(`-sOutputFile="%s"`, optPdfPath)
 	argMarks1 := "-c"
-	argMarks2 := `[ /Title (Jaziels Important Document) 
-						/Author (Jaziel Aguirre)
+	argMarks2 := fmt.Sprintf(`[ /Title (%s) 
+						/Author (%s) 
+						/Subject (%s) 
+						/Keywords (%s) 
 						/DOCINFO pdfmark
 						
-						[ /Title (Contents) /Page 1 /OUT pdfmark
+						[ /Title (%s) /Page 1 /OUT pdfmark
 						
-						[ /Subtype /Catalog /Lang (en-US) /StPNE pdfmark`
+						[ {Catalog} <</Lang (%s)>> /PUT pdfmark`, m["title"], m["author"], m["subject"], m["keywords"], m["title"], m["language"])
 	args := []string{argNoPause, argBatch, argDevice, argPdfSettings, argDuplicateImages, argOutput, pdfPath, argMarks1, argMarks2}
 
 	cmd := exec.Command("gs", args...)
 	err := cmd.Run()
 	if err != nil {
-		log.Print(err)
+		log.Printf(`Error in OptimizePDF, ERROR: %s :: %s`, err, err.Error())
 		return "ERROR", err
 	}
 	return optPdfPath, nil
@@ -54,6 +57,7 @@ func OptimizePDF(pdfPath string) (string, error) {
 func GetPdfBytes(pdfPath string) ([]byte, error) {
 	content, err := ioutil.ReadFile(pdfPath)
 	if err != nil {
+		log.Printf(`Error in GetPdfBytes, ERROR: %s :: %s`, err, err.Error())
 		return nil, err
 	}
 
