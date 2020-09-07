@@ -1,6 +1,6 @@
 {
     "filename": "starfleet-academy-letter",
-    "template": "template1",
+    "template": "academy",
     "pagesize": "A4",
     "data": {
         "firstname": "Brandon",

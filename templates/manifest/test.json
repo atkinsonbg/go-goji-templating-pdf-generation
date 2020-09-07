@@ -1,0 +1,21 @@
+{
+    "filename": "starfleet-academy-letter",
+    "template": "academy",
+    "pagesize": "A4",
+    "data": {
+        "firstname": "Brandon",
+        "lastname": "Atkinson",
+        "address1": "123 South Till St",
+        "address2": "San Francisco, CA 90034",
+        "address3": "United States, Earth",
+        "examdate": "12/20/3045",
+        "replydate": "11/10/3045"
+    },
+    "metadata": {
+        "language": "en-US",
+        "title": "New Metadata Strcuture",
+        "author": "Brandon Atkinson",
+        "subject": "Awesome Subject",
+        "keywords": "Keyword 1, keyword 2"
+    }
+}

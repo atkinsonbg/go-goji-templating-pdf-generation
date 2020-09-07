@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 100px;
+}
+
+#header-logo-div {
+    text-align: center;
+}
+
+#header-address {
+    margin-top: 60px;
+}
+
+#header-address span {
+    display: block;
+}
+
+#letter-body {
+    margin-top: 40px;
+}
+
+#letter-body span {
+    display: block;
+    margin-bottom: 20px;
+}
+
+#letter-close span {
+    display: block;
+}

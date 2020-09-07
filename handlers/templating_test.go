@@ -10,14 +10,24 @@ import (
 func TestTemplateHandler(t *testing.T) {
 	var data = []byte(`
 	{
-		"filename": "starfleetnew",
-		"template": "template1",
-		"optimize": true,
+		"filename": "starfleet-academy-letter",
+		"template": "academy",
+		"pagesize": "Letter",
 		"data": {
 			"firstname": "Brandon",
 			"lastname": "Atkinson",
+			"address1": "123 South Till St",
+			"address2": "San Francisco, CA 90034",
+			"address3": "United States, Earth",
 			"examdate": "12/20/3045",
 			"replydate": "11/10/3045"
+		},
+		"metadata": {
+			"language": "en-US",
+			"title": "New Metadata Strcuture",
+			"author": "Brandon Atkinson",
+			"subject": "Awesome Subject",
+			"keywords": "Keyword 1, keyword 2"
 		}
 	}`)
 
@@ -44,11 +54,24 @@ func TestTemplateHandler(t *testing.T) {
 func TestTemplateHandlerMissingKey(t *testing.T) {
 	var data = []byte(`
 	{
-		"filename": "starfleetnew",
-		"template": "template1",
-		"optimize": true,
+		"filename": "starfleet-academy-letter",
+		"template": "academy",
+		"pagesize": "Letter",
 		"data": {
-			"wrongkey": "Brandon"
+			"firstname": "Brandon",
+			"lastname": "Atkinson",
+			"address1": "123 South Till St",
+			"address22222222": "San Francisco, CA 90034",
+			"address3": "United States, Earth",
+			"examdate": "12/20/3045",
+			"replydate": "11/10/3045"
+		},
+		"metadata": {
+			"language": "en-US",
+			"title": "New Metadata Strcuture",
+			"author": "Brandon Atkinson",
+			"subject": "Awesome Subject",
+			"keywords": "Keyword 1, keyword 2"
 		}
 	}`)
 
@@ -135,17 +158,27 @@ func BenchmarkGenerateHTMLFromData(b *testing.B) {
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
 		var data = []byte(`
-							{
-								"filename": "starfleetnew",
-								"template": "template1",
-								"optimize": true,
-								"data": {
-									"firstname": "Brandon",
-									"lastname": "Atkinson",
-									"examdate": "12/20/3045",
-									"replydate": "11/10/3045"
-								}
-							}`)
+		{
+			"filename": "starfleet-academy-letter",
+			"template": "academy",
+			"pagesize": "Letter",
+			"data": {
+				"firstname": "Brandon",
+				"lastname": "Atkinson",
+				"address1": "123 South Till St",
+				"address2": "San Francisco, CA 90034",
+				"address3": "United States, Earth",
+				"examdate": "12/20/3045",
+				"replydate": "11/10/3045"
+			},
+			"metadata": {
+				"language": "en-US",
+				"title": "New Metadata Strcuture",
+				"author": "Brandon Atkinson",
+				"subject": "Awesome Subject",
+				"keywords": "Keyword 1, keyword 2"
+			}
+		}`)
 
 		buff := bytes.NewBuffer(data)
 

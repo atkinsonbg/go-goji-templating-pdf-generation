@@ -5,7 +5,7 @@ import (
 )
 
 func TestConvertHTMLtoPDF(t *testing.T) {
-	err := ConvertHTMLtoPDF("templates/test.html", "templates/test.pdf")
+	err := ConvertHTMLtoPDF("templates/test.html", "templates/test.pdf", "A4")
 	if err != nil {
 		t.Error("FAIL: Did not convert HTML.")
 		return
@@ -40,7 +40,15 @@ func TestGetPDFBytes(t *testing.T) {
 }
 
 func TestOptimizePDF(t *testing.T) {
-	_, err := OptimizePDF("../templates/test.pdf")
+	m := make(map[string]interface{})
+	md := make(map[string]interface{})
+	md["language"] = "en-US"
+	md["title"] = "Title"
+	md["subject"] = "Sub"
+	md["author"] = "Author"
+	md["keywords"] = "Keywords"
+	m["metadata"] = md
+	_, err := OptimizePDF("../templates/test.pdf", m["metadata"])
 	if err != nil {
 		t.Error("Fail: Did not optimize PDF.")
 		return
@@ -52,13 +60,21 @@ func TestOptimizePDF(t *testing.T) {
 func BenchmarkConvertHTMLtoPDF(b *testing.B) {
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		_ = ConvertHTMLtoPDF("templates/test.html", "templates/test.pdf")
+		_ = ConvertHTMLtoPDF("templates/test.html", "templates/test.pdf", "A4")
 	}
 }
 
 func BenchmarkOptimizePDF(b *testing.B) {
+	m := make(map[string]interface{})
+	md := make(map[string]interface{})
+	md["language"] = "en-US"
+	md["title"] = "Title"
+	md["subject"] = "Sub"
+	md["author"] = "Author"
+	md["keywords"] = "Keywords"
+	m["metadata"] = md
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = OptimizePDF("../templates/test.pdf")
+		_, _ = OptimizePDF("../templates/test.pdf", m["metadata"])
 	}
 }

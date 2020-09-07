@@ -46,7 +46,7 @@ func TestGenerateHTMLFromDataPass(t *testing.T) {
 
 	tempdir, htmlPath, _, _ := GetTempDirAndPaths("unittest")
 
-	err := GenerateHTMLFromData(m, tempdir, "template1", htmlPath)
+	err := GenerateHTMLFromData(m, tempdir, "academy", htmlPath)
 	if err != nil {
 		t.Error("FAIL: generating HTML was not successful")
 		return
@@ -61,7 +61,7 @@ func TestGenerateHTMLFromDataFail(t *testing.T) {
 
 	tempdir, htmlPath, _, _ := GetTempDirAndPaths("unittest")
 
-	err := GenerateHTMLFromData(m, tempdir, "template1", htmlPath)
+	err := GenerateHTMLFromData(m, tempdir, "academy", htmlPath)
 	if err != nil {
 		t.Log("PASS: missingkey option caught error")
 		return
@@ -81,6 +81,6 @@ func BenchmarkGenerateHTMLFromData(b *testing.B) {
 
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		_ = GenerateHTMLFromData(m, tempdir, "template1", htmlPath)
+		_ = GenerateHTMLFromData(m, tempdir, "academy", htmlPath)
 	}
 }
