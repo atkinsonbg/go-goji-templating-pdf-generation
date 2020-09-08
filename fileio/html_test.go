@@ -2,6 +2,7 @@ package fileio
 
 import (
 	"bytes"
+	"encoding/json"
 	"io/ioutil"
 	"testing"
 )
@@ -38,15 +39,34 @@ func TestDecodeRequestBodyPass(t *testing.T) {
 }
 
 func TestGenerateHTMLFromDataPass(t *testing.T) {
+	var data = []byte(`
+	{
+		"filename": "starfleet-academy-letter",
+		"template": "academy",
+		"pagesize": "Letter",
+		"data": {
+			"firstname": "Brandon",
+			"lastname": "Atkinson",
+			"address1": "123 South Till St",
+			"address2": "San Francisco, CA 90034",
+			"address3": "United States, Earth",
+			"examdate": "12/20/3045",
+			"replydate": "11/10/3045"
+		},
+		"metadata": {
+			"language": "en-US",
+			"title": "New Metadata Strcuture",
+			"author": "Brandon Atkinson",
+			"subject": "Awesome Subject",
+			"keywords": "Keyword 1, keyword 2"
+		}
+	}`)
 	m := map[string]interface{}{}
-	m["firstname"] = "Brandon"
-	m["lastname"] = "Atkinson"
-	m["examdate"] = "2/3/4"
-	m["replydate"] = "1/2/3"
+	_ = json.Unmarshal(data, &m)
 
 	tempdir, htmlPath, _, _ := GetTempDirAndPaths("unittest")
 
-	err := GenerateHTMLFromData(m, tempdir, "academy", htmlPath)
+	err := GenerateHTMLFromData(m["data"], tempdir, "academy", htmlPath)
 	if err != nil {
 		t.Error("FAIL: generating HTML was not successful")
 		return
@@ -71,16 +91,35 @@ func TestGenerateHTMLFromDataFail(t *testing.T) {
 }
 
 func BenchmarkGenerateHTMLFromData(b *testing.B) {
+	var data = []byte(`
+	{
+		"filename": "starfleet-academy-letter",
+		"template": "academy",
+		"pagesize": "Letter",
+		"data": {
+			"firstname": "Brandon",
+			"lastname": "Atkinson",
+			"address1": "123 South Till St",
+			"address2": "San Francisco, CA 90034",
+			"address3": "United States, Earth",
+			"examdate": "12/20/3045",
+			"replydate": "11/10/3045"
+		},
+		"metadata": {
+			"language": "en-US",
+			"title": "New Metadata Strcuture",
+			"author": "Brandon Atkinson",
+			"subject": "Awesome Subject",
+			"keywords": "Keyword 1, keyword 2"
+		}
+	}`)
 	m := map[string]interface{}{}
-	m["firstname"] = "Brandon"
-	m["lastname"] = "Atkinson"
-	m["examdate"] = "2/3/4"
-	m["replydate"] = "1/2/3"
+	_ = json.Unmarshal(data, &m)
 
 	tempdir, htmlPath, _, _ := GetTempDirAndPaths("unittest")
 
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		_ = GenerateHTMLFromData(m, tempdir, "academy", htmlPath)
+		_ = GenerateHTMLFromData(m["data"], tempdir, "academy", htmlPath)
 	}
 }
